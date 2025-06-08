@@ -1,0 +1,147 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{scrlayer-scrpage}
+
+
+\title{Assignment 1}
+\author{Group 2 (Lena Kottenstede, Daniel Pytlik, Eik Weißhaar)}
+
+\begin{document}
+\maketitle
+
+\section{Security Goals}
+In 2013 a successful cyber attack was launched on Adobe that impacted at least 38 million users and exposed user information as well as company source code.\\
+\newline
+One of the broken security goals is confidentiality, because the exposed passwords were not hashed, but encrypted (with no randomization introduced in the encryption process) and password hints were leaked in plain text. This means that cracking the passwords would be only a matter of time. With the passwords broken there is no more access control in place to protect the confidentiality of user accounts. [source: https://scotthelme.co.uk/the-adobe-hack/ (accessed: 27.05.2025)]\\
+\newline
+Another broken security goal is privacy, because Adobe did not consent to the release or use of their source code. [source: https://krebsonsecurity.com/2013/10/adobe-breach-impacted-at-least-38-million-users/\#more-23030 (accessed: 27.05.2025)] \\
+\newline
+They also broke authorization, by using spear phishing emails targeting Adobe employees and thus using the authorization of the targeted employees. [source: https://medium.com/@maazptl24/the-adobe-attack-of-2013-a-cautionary-tale-of-cybersecurity-failure-1ef4ec74eb64 (accessed: 27.05.2025)]
+
+\section{Framework}
+
+\subsection{confidentiality}
+The basis policy is the protection of secret content or data.\\ \newline
+The mechanism in place was the encryption of passwords, but as perviously established: the passwords should have been hashed and the password hints should not exist or at least not be visible in plain text.\\ \newline
+The incentives of the attacker could have been the access to user profiles as well as leverage against adobe for ransom. Since encrypted credit card details were also leaked the incentive could also lie here.\\ \newline
+Would the passwords be stored properly one could expect a secure access control, so that only the person that knows the password can access the user information.
+
+\subsection{privacy}
+The basis policy is the right to determine what information is released or what is hidden (in this case the source code).\\ \newline 
+The mechanism for defense would have been access control, so that only certain employees could access the code, but they fell victim to spear phishing. A possible mechanism for defense could be a tighter access control. Another possibility could be certain company policies that dictate what to do when emails ask you to disclose personal information.\\ \newline
+The incentive for attackers could be the programming of a similar program to the services that Adobe provides and selling these products.\\ \newline
+If employees do not share their password an their password is securely stored we could expect a high level of assurance, but several variables relating to the human mind and its weaknesses can still be exploited (and have been in this case, since they fell victim to spear phishing). The proposed use of company policies do not provide the highest level of assurance, because even if you theoretically dictate a policy, if the policy interrupts the normal workflow it is very likely that employees will not adhere to said policy.
+
+\subsection{authorization}
+The basis policy is that a verifier can determine whether an entity is allowed to execute some action or access some data.\\ \newline
+The mechanism for defense would have been access control, so that only certain employees could access the code, but they fell victim to spear phishing. A possible mechanism for defense could be a tighter access control. Another possibility could be certain company policies that dictate what to do when emails ask you to disclose personal information.\\ \newline
+The incentive for attackers is the access to user information and source code, most likely to use these for monetary gain.\\ \newline
+If employees do not share their password an their password is securely stored we could expect a high level of assurance, but several variables relating to the human mind and its weaknesses can still be exploited (and have been in this case, since they fell victim to spear phishing). The proposed use of company policies do not provide the highest level of assurance, because even if you theoretically dictate a policy, if the policy interrupts the normal workflow it is very likely that employees will not adhere to said policy.
+
+\section{Privacy and the GDPR}
+This is not an effective way to obtain users consent. human decision making process is reinforced by the outcome and if a problem (in this case the pop up) goes away the decision is seen as correct. Decision making is also affected by automatismus introduced by conditioning. This means that a user does not stop to think when a decision has been made before, but reacts automatically. This means that if the user has clicked \glqq I'm OK with that\grqq ~ before they are likely to do it again. Since users view computers as devices to get things done with, any pop up like this stands in the way of this goal and is likely to just be ignored or clicked away as fast as possible.\\ \newline
+
+\noindent This can easily be exploited by attackers, since the majority of users are not likely to read the privacy policy or the cookie settings (and most won't even know what a cookie does) and they would consent to anything the policy says and agree to any cookies the website wants to set, which attackers can than exploit.
+
+\section{Phish or Not?}
+One weakness of the human mind that this email could target is the respect for authority. Since the email seems to come from the vice-chancellor of the university, a very high authority figure, people will be very likely to respect his authority and comply with his demands. Another weakness of the human mind which could be exploited with this email is the confirmation bias. By listing examples of corporate scandals at big companies the people receiving this email have likely heard of before it reinforces their preconceptions that the program is useful and necessary.\\ \newline
+\noindent By displaying the address from which the email was sent very large and as the first thing (accompanied by the big red circle) the user sees it battles the weakness respect for authority, because the user can clearly see that the email was not sent by the embodied authority figure.
+
+
+\section{This time for real}
+
+Why use padding? AES uses encryption blocks of a fixed size so our input needs to be a multiple of the blocksize in order to divide it correctly over the blocks.
+The padding fills our input so that it can be correctly distributed.
+
+\section{The problems of CTR mode}
+
+\subsection*{a)}
+
+We need to show that $c_{1,1} \oplus c_{2,1} = m_{1,1} \oplus m_{2,1}$.
+
+\[
+\begin{aligned}
+c_{1,1} \oplus c_{2,1} 
+&= (m_{1,1} \oplus \mathrm{Enc}_k(\mathrm{IV}.1)) \oplus (m_{2,1} \oplus \mathrm{Enc}_k(\mathrm{IV}.1)) \\
+&= m_{1,1} \oplus m_{2,1} \oplus \mathrm{Enc}_k(\mathrm{IV}.1) \oplus \mathrm{Enc}_k(\mathrm{IV}.1) \\
+&= m_{1,1} \oplus m_{2,1}
+\end{aligned}
+\] \\ 
+\newline How could the above relation be exploited in practice? 
+Protocols are predictable as they use the same headers every time. So we assume that the attacker also knows $m_{1,1}$ additionally to $c_{1,1}$ and $c_{2,1}$.
+\[
+\begin{aligned}
+m_{1,1} \oplus c_{1,1} \oplus c_{2,1} 
+&= m_{1,1} \oplus m_{2,1} \oplus m_{1,1} \\
+&= m_{2,1}
+\end{aligned}
+\]
+If we use the same IV twice the attacker also gets $m_{2,1}$.
+
+\subsection*{b)}
+Knowing the source code follows Kerckhoffs's principle. We see that the IV is always 
+$000000000000000$ which is not secure as stated in the above task.
+We know that the plaintext starts with $plainStart$ and ends with $plainEnd$ with each of them having $5$ lines. We also know that the counter is computed with $i \mod 10$.
+$plainStart$ is encrypted with ctr $0 - 4$ and $plainEnd$ with ctr $5 - 9$. Now we can just xor all lines encoded with ctr $0 - 4$ with $plainStart$ (encrypted and plain)
+and all lines with ctr $5 - 9$ with $plainEnd$ (encrypted and plain) in order to decrypt the text.
+In our example the plain text has lines multiple of $10$. If another plaintext has numer of lines $n$ with $n \mod 10 > 4$ we would only be able to decrypt lines with ctr
+$c \leq n$.
+The text is from Moby-Dick.
+
+\section{Euler’s Totient Function}
+\subsection{Proof}
+For 
+\[
+\varphi(n) \;=\; n \;\prod_{\,r \mid n}\Bigl(1 - \tfrac{1}{r}\Bigr),
+\]
+where \(n = p\,q\) with \(p\) and \(q\) prime, the following holds:
+
+\begin{align*}
+\varphi(pq)
+&= p\,q \;\Bigl(1 - \tfrac{1}{p}\Bigr)\;\Bigl(1 - \tfrac{1}{q}\Bigr) \\[1ex]
+&= p\,q \;\Bigl(\tfrac{p}{p}\;-\tfrac{1}{p}\Bigr)\;\Bigl(\tfrac{q}{q}\;-\tfrac{1}{q}\Bigr)\; \\[1ex]
+&= p\,q \;\Bigl(\tfrac{p-1}{p}\Bigr)\;\Bigl(\tfrac{q-1}{q}\Bigr) \\[1ex]
+&= p\,q \;\cdot\; \frac{(p-1)\,(q-1)}{p\,q} \\[1ex]
+&= p\,q - q - p + 1 \\[1ex]
+&= (p - 1)\,(q - 1).
+\end{align*}
+
+
+\subsection{Intuitive Explanation}
+
+If \(n = p \cdot q\), then every multiple of \(p\) and every multiple of \(q\) that is less than \(p \cdot q\) is \emph{not} co-prime to \(n\), since
+\[
+p \mid n \quad\text{and}\quad p \mid (k \cdot p),\quad k = 1,2,\dots,q,
+\]
+and
+\[
+q \mid n \quad\text{and}\quad q \mid (h \cdot q),\quad h = 1,2,\dots,p.
+\]
+Because \(p \cdot q\) itself would be counted twice (once as a multiple of \(p\) and once as a multiple of \(q\)), we must subtract 1.  So there are
+\[
+p + q - 1
+\]
+integers in \(\{1,2,\dots,pq\}\) that are \emph{not} co-prime to \(n\).
+
+Since in total there are \(n = p \cdot q\) positive integers up to \(p\,q\), the amount of numbers that are co-prime to \(n\) is
+\[
+n - \bigl(p + q - 1\bigr)
+\;=\; p\,q - \bigl(p + q - 1\bigr)
+\;=\; p\,q - p - q + 1
+\;=\; (p-1)\,(q-1).
+\]
+
+
+\end{document}
